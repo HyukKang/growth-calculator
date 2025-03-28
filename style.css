@@ -223,3 +223,163 @@ footer {
     margin-top: 6rem;
     border-top: 1px solid rgba(0,0,0,0.03);
 }
+
+/* Results Page Styles */
+.header-section {
+    background: linear-gradient(130deg, #5e60ce 0%, #5390d9 50%, #48bfe3 100%);
+    padding: 2rem 0;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.header-section::before, .header-section::after {
+    content: "";
+    position: absolute;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+}
+
+.header-section::before {
+    width: 40vw;
+    height: 40vw;
+    top: -20vw;
+    right: -10vw;
+}
+
+.header-section::after {
+    width: 20vw;
+    height: 20vw;
+    bottom: -10vw;
+    left: -5vw;
+}
+
+.percentile-badge {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.percentile-icon {
+    display: block;
+    margin: 0 auto 1rem;
+    font-size: 2rem;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    border-radius: 50%;
+    background: linear-gradient(130deg, var(--primary-light) 0%, var(--primary) 100%);
+    color: white;
+    box-shadow: 0 10px 20px rgba(94, 96, 206, 0.2);
+}
+
+.percentile-text {
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.chart-container {
+    width: 100%;
+    height: 300px;
+    margin: 1.5rem 0;
+}
+
+.info-text {
+    background-color: rgba(94, 96, 206, 0.05);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    margin-top: 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.info-text strong {
+    color: var(--primary);
+}
+
+.status-normal {
+    color: #10b981;
+}
+
+.status-warning {
+    color: #f59e0b;
+}
+
+.status-alert {
+    color: #ef4444;
+}
+
+.back-button {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.adsense-container {
+    margin: 2rem 0;
+}
+
+.interpretation {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    background-color: rgba(94, 96, 206, 0.05);
+}
+
+.interpretation h5 {
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.interpretation p {
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+}
+
+.trend-arrow {
+    font-size: 1.25rem;
+    margin-left: 0.5rem;
+}
+
+.trend-up {
+    color: #10b981;
+}
+
+.trend-down {
+    color: #ef4444;
+}
+
+.trend-neutral {
+    color: #f59e0b;
+}
+
+.custom-tooltip {
+    background-color: var(--bg-white);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.9rem;
+}
+```
