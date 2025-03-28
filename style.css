@@ -505,3 +505,12 @@ footer {
         padding: 4rem 0 6rem; /* 공간 조절 */
     }
 }
+
+.logo {
+    width: 150px;       /* 로고 크기 조절 */
+    height: 150px;      /* 가로 세로 동일 */
+    border-radius: 50%; /* 원형으로 만들기 */
+    object-fit: cover;  /* 이미지 잘림 방지 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+}
+
