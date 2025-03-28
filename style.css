@@ -416,4 +416,48 @@ footer {
         padding: 4rem 0 6rem;
     }
 }
+.hero-title {
+    font-weight: 800;
+    color: white;
+    font-size: 2.4rem;
+    margin-bottom: 1.2rem;
+    position: relative;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center; /* 중앙 정렬 */
+    line-height: 1.2; /* 줄 간격 감소 */
+    word-break: keep-all; /* 줄바꿈 방지 */
+    white-space: pre-wrap; /* 줄바꿈 처리 개선 */
+}
+
+.lead {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 300;
+    line-height: 1.6; /* 줄 간격 감소 */
+    font-size: 1.1rem;
+    max-width: 90%; /* 너비 제한 */
+    margin: 0 auto;
+    word-break: keep-all;
+    text-align: center; /* 중앙 정렬 */
+    padding: 0.5rem; /* 여유 공간 */
+}
+
+/* 반응형 처리 */
+@media (max-width: 767px) {
+    .hero-title {
+        font-size: 1.8rem; /* 폰트 크기 감소 */
+        line-height: 1.4;
+        margin-bottom: 1rem;
+        padding: 0 1rem;
+    }
+
+    .lead {
+        font-size: 1rem; /* 모바일 폰트 크기 줄이기 */
+        line-height: 1.4; /* 모바일 줄 간격 감소 */
+        padding: 0 1rem;
+    }
+
+    .hero-section {
+        padding: 4rem 0 6rem; /* 공간 조절 */
+    }
+}
 
