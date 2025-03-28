@@ -514,3 +514,14 @@ footer {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
 }
 
+.status-healthy {
+    color: green;
+}
+
+.status-stable {
+    color: blue;
+}
+
+.status-check {
+    color: orange;
+}
