@@ -1,24 +1,211 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>영유아 성장 계산기 (0-36개월)</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- 네이버 사이트 인증용 메타 태그 (나중에 추가) -->
-  <!-- <meta name="naver-site-verification" content="네이버에서_제공한_인증_코드" /> -->
-  
-  <!-- 구글 애드센스 코드 (나중에 추가) -->
-  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_CLIENT_ID" crossorigin="anonymous"></script> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소아청소년 성장도표 백분위 계산기</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <!-- 네이버 사이트 인증용 메타 태그 (나중에 추가) -->
+    <!-- <meta name="naver-site-verification" content="네이버에서_제공한_인증_코드" /> -->
+    
+    <!-- 구글 애드센스 코드 (나중에 추가) -->
+    <!-- <script async src="https://pagead.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_CLIENT_ID" crossorigin="anonymous"></script> -->
 </head>
 <body>
-  <div id="app"></div>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="position-relative z-index-1 col-lg-8 mx-auto text-center">
+                    <span class="badge mb-3" style="background-color: rgba(255,255,255,0.2); color: white; font-weight: 600; padding: 0.6rem 1.2rem; border-radius: 50px; backdrop-filter: blur(10px); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">✨ 단이 아빠의 특별한 선물</span>
+                    <h1 class="hero-title">소아청소년<br>성장도표 계산기</h1>
+                    <p class="lead mb-4" style="color: rgba(255,255,255,0.9); font-weight: 300; line-height: 1.8; font-size: 1.15rem; max-width: 700px; margin: 0 auto;">
+                        아이의 건강한 성장을 위한 여정에 함께합니다.<br>
+                        우리 단이를 위해 제작했지만, 이제 모든 부모님과<br>
+                        특별한 성장 이야기를 나누고 싶습니다. 💖
+                    </p>
+                    <p class="mb-5" style="color: rgba(255,255,255,0.8); font-weight: 300; max-width: 600px; margin: 0 auto 2rem;">
+                        여러분의 소중한 아이가 어떻게 성장하고 있는지 확인하고,<br>
+                        건강한 미래를 함께 그려나가요. 🌱
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <a href="#growthForm" class="btn px-5 py-3" style="border-radius: 50px; background-color: white; color: var(--primary); border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-weight: 700; font-size: 1.1rem; transition: all 0.3s ease;">
+                            시작하기 <i class="fas fa-play-circle ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <!-- 라이브러리 로드 -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <!-- 데이터 및 애플리케이션 로직 -->
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+    <!-- Main Content -->
+    <div class="container main-container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Input Form Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-baby" style="color: var(--primary-light);"></i>
+                        <h5 class="mb-0">성장 정보 입력</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="growthForm">
+                            <!-- Gender Selection -->
+                            <div class="mb-3">
+                                <label class="form-label">성별</label>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="genderMale" value="male" checked>
+                                        <label class="form-check-label" for="genderMale">남자</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="female">
+                                        <label class="form-check-label" for="genderFemale">여자</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Birth Date -->
+                            <div class="mb-3">
+                                <label for="birthDate" class="form-label">생년월일</label>
+                                <input type="date" class="form-control" id="birthDate" required>
+                                <div id="ageDisplay" class="mt-2 ps-2" style="color: var(--primary); font-weight: 500;"></div>
+                                <div class="footnote">
+                                    아이의 정확한 생년월일을 입력해주세요. 나이 계산에 사용됩니다.
+                                </div>
+                            </div>
+                            
+                            <!-- Height -->
+                            <div class="mb-3">
+                                <label for="height" class="form-label">신장 (cm)</label>
+                                <input type="number" step="0.1" class="form-control" id="height" placeholder="예: 120.5" required>
+                                <div class="footnote">
+                                    아이의 신장을 센티미터(cm) 단위로 입력해주세요.
+                                </div>
+                            </div>
+                            
+                            <!-- Weight -->
+                            <div class="mb-3">
+                                <label for="weight" class="form-label">체중 (kg)</label>
+                                <input type="number" step="0.1" class="form-control" id="weight" placeholder="예: 25.5" required>
+                                <div class="footnote">
+                                    아이의 체중을 킬로그램(kg) 단위로 입력해주세요.
+                                </div>
+                            </div>
+                            
+                            <!-- Head Circumference -->
+                            <div class="mb-3">
+                                <label for="headCircumference" class="form-label">머리둘레 (cm)</label>
+                                <input type="number" step="0.1" class="form-control" id="headCircumference" placeholder="예: 52.0">
+                                <div class="footnote">
+                                    만 3세 이하 아이에게 권장되는 측정값입니다. 센티미터(cm) 단위로 입력해주세요.
+                                </div>
+                            </div>
+                            
+                            <!-- Data Source Selection -->
+                            <div class="mb-3">
+                                <label class="form-label">데이터 기준</label>
+                                <select class="form-select" id="dataSource">
+                                    <option value="kdca" selected>질병관리청 기준</option>
+                                    <option value="who">WHO 세계보건기구 기준</option>
+                                </select>
+                                <div class="footnote">
+                                    질병관리청 기준: 한국 소아청소년 성장 도표 (2017년 개정)<br>
+                                    WHO 기준: 세계보건기구 국제 성장 도표
+                                </div>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <div class="text-center mt-5">
+                                <button type="button" id="resultBtn" class="btn btn-primary result-btn">
+                                    결과 확인하기 <i class="fas fa-search-plus ms-2"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- About Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar" style="color: var(--primary-light);"></i>
+                        <h5 class="mb-0">백분위수란?</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="mb-4 p-4 rounded-3" style="background: linear-gradient(to right, rgba(94, 96, 206, 0.05), rgba(83, 144, 217, 0.05));">
+                            <div class="d-flex align-items-center">
+                                <div class="me-4" style="background-color: var(--primary); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-lightbulb text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1" style="font-weight: 600; color: var(--primary);">정의</h6>
+                                    <p class="mb-0" style="line-height: 1.7; font-weight: 400; color: var(--text-dark);">백분위수는 같은 연령, 같은 성별의 아이들과 비교했을 때 상대적인 위치를 나타냅니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4 p-4 rounded-3" style="background: linear-gradient(to right, rgba(94, 96, 206, 0.05), rgba(83, 144, 217, 0.05));">
+                            <div class="d-flex align-items-center">
+                                <div class="me-4" style="background-color: var(--primary); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-baby-carriage text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1" style="font-weight: 600; color: var(--primary);">예시</h6>
+                                    <p class="mb-0" style="line-height: 1.7; font-weight: 400; color: var(--text-dark);">예를 들어, 신장 백분위수가 75이라면, 같은 나이의 100명 중 75명보다 크고 25명보다 작다는 의미입니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 rounded-3" style="background: linear-gradient(to right, rgba(94, 96, 206, 0.05), rgba(83, 144, 217, 0.05));">
+                            <div class="d-flex align-items-center">
+                                <div class="me-4" style="background-color: var(--primary); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-heartbeat text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1" style="font-weight: 600; color: var(--primary);">판단 기준</h6>
+                                    <p class="mb-0" style="line-height: 1.7; font-weight: 400; color: var(--text-dark);">일반적으로 3~97 백분위수 사이에 있으면 정상 범위로 간주합니다. 단, 백분위수는 참고 자료일 뿐이며, 아이의 성장 패턴이 더 중요합니다. 지속적인 관찰과 필요 시 전문의 상담을 권장합니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="d-inline-block mb-4 p-3 rounded-3" style="background: linear-gradient(to right, rgba(94, 96, 206, 0.1), rgba(83, 144, 217, 0.1));">
+                        <img src="/api/placeholder/80/80" alt="Logo" class="rounded-circle" style="opacity: 0.8;">
+                    </div>
+                    <h4 class="mb-3" style="font-weight: 700; color: var(--primary);">소아청소년 성장도표 백분위 계산기</h4>
+                    <p class="mb-4" style="max-width: 500px; margin: 0 auto; color: var(--text-light); font-weight: 300;">아이의 건강한 성장을 위한 여정에 함께합니다. 🌟</p>
+                    <div class="d-flex justify-content-center gap-3 mb-4">
+                        <a href="#" class="btn btn-sm" style="background-color: var(--primary); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm" style="background-color: var(--primary); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm" style="background-color: var(--primary); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fab fa-blogger"></i>
+                        </a>
+                    </div>
+                    <p class="mb-1" style="font-weight: 500; color: var(--text-dark);">© 2025 | 단이 아빠가 만든 ❤️</p>
+                    <p class="small" style="color: var(--text-light); font-weight: 300;">이 계산기는 참고용으로만 사용해주시고, 의학적 판단은 반드시 전문의와 상담하세요.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
+```
