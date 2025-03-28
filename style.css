@@ -381,3 +381,39 @@ footer {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 0.9rem;
 }
+.hero-title {
+    font-weight: 800;
+    color: white;
+    font-size: 2.4rem; /* 기존 2.8rem에서 줄임 */
+    margin-bottom: 1rem;
+    position: relative;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    word-break: keep-all;
+}
+
+.lead {
+    color: rgba(255,255,255,0.9);
+    font-weight: 300;
+    line-height: 1.8;
+    font-size: 1rem; /* 기존 1.15rem에서 줄임 */
+    max-width: 90%; /* 모바일에서 좌우 공백 최소화 */
+    margin: 0 auto;
+    word-break: keep-all;
+}
+
+/* 모바일 최적화 */
+@media (max-width: 767px) {
+    .hero-title {
+        font-size: 1.8rem; /* 더 작은 폰트 크기 */
+    }
+
+    .lead {
+        font-size: 0.9rem; /* 더 작은 폰트 크기 */
+        line-height: 1.6;
+    }
+
+    .hero-section {
+        padding: 4rem 0 6rem;
+    }
+}
+
