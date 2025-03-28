@@ -171,23 +171,35 @@ function interpolatePercentile(value, lowerValue, lowerPercentile, upperValue, u
 }
 
 // 상태 업데이트 함수
-function updateStatus(percentile) {
+function updateStatus(id, percentile) {
     let status = "";
-    let description = "";
+    let statusClass = "";
 
+    // 상태에 따른 텍스트와 클래스 설정
     if (percentile >= 90) {
-        status = "양호 범위";
-        description = "건강 상태가 양호하며 별도의 조치가 필요하지 않습니다.";
+        status = "건강 양호";
+        statusClass = "status-healthy";
     } else if (percentile >= 50) {
         status = "안정적 상태";
-        description = "전반적으로 안정적인 상태로, 주기적인 확인을 권장합니다.";
+        statusClass = "status-stable";
     } else {
         status = "건강 확인 필요";
-        description = "건강 체크가 필요하며, 전문가의 상담을 고려하세요.";
+        statusClass = "status-check";
     }
 
-    return { status, description };
+    // 상태 텍스트와 클래스 업데이트
+    const statusElement = document.getElementById(id + "Status");
+    if (statusElement) {
+        statusElement.innerText = status;
+        statusElement.className = "mt-2 fw-bold " + statusClass;
+    }
 }
+
+// 상태 업데이트 호출 예시
+updateStatus("height", 91);   // 신장 상태 업데이트
+updateStatus("weight", 93);   // 체중 상태 업데이트
+updateStatus("head", 0);      // 머리둘레 상태 업데이트
+
 
 
 // BMI 상태 업데이트 함수
