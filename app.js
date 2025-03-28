@@ -1,4 +1,3 @@
-```javascript
 // 메인 애플리케이션 로직
 document.addEventListener('DOMContentLoaded', function() {
   // 앱 컨테이너 생성
@@ -170,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
   measurementTypeInputs.forEach(input => {
     input.addEventListener('change', function() {
       measurementType = this.value;
-      
+               
       // 입력 필드 표시/숨김
       heightInput.style.display = measurementType === 'height' ? 'block' : 'none';
       weightInput.style.display = measurementType === 'weight' ? 'block' : 'none';
@@ -450,3 +449,4 @@ document.addEventListener('DOMContentLoaded', function() {
       options: chartOptions
     });
   }
+});
