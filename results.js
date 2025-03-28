@@ -171,24 +171,24 @@ function interpolatePercentile(value, lowerValue, lowerPercentile, upperValue, u
 }
 
 // 상태 업데이트 함수
-function updateStatus(elementId, percentile) {
-    const element = document.getElementById(elementId);
-    element.classList.remove('status-normal', 'status-warning', 'status-alert');
-    
-    if (percentile < 3) {
-        element.textContent = '낮음';
-        element.classList.add('status-alert');
-    } else if (percentile > 97) {
-        element.textContent = '높음';
-        element.classList.add('status-alert');
-    } else if (percentile < 10 || percentile > 90) {
-        element.textContent = '주의 관찰';
-        element.classList.add('status-warning');
+function updateStatus(percentile) {
+    let status = "";
+    let description = "";
+
+    if (percentile >= 90) {
+        status = "양호 범위";
+        description = "건강 상태가 양호하며 별도의 조치가 필요하지 않습니다.";
+    } else if (percentile >= 50) {
+        status = "안정적 상태";
+        description = "전반적으로 안정적인 상태로, 주기적인 확인을 권장합니다.";
     } else {
-        element.textContent = '정상 범위';
-        element.classList.add('status-normal');
+        status = "건강 확인 필요";
+        description = "건강 체크가 필요하며, 전문가의 상담을 고려하세요.";
     }
+
+    return { status, description };
 }
+
 
 // BMI 상태 업데이트 함수
 function updateBMIStatus(elementId, percentile) {
