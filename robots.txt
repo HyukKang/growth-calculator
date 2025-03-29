@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://percentgrow.netlify.app/sitemap.xml
