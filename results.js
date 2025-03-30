@@ -1,91 +1,64 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // URL 파라미터 파싱
-    const urlParams = new URLSearchParams(window.location.search);
-    const gender = urlParams.get('gender');
-    const birthDate = urlParams.get('birthDate');
-    const height = parseFloat(urlParams.get('height'));
-    const weight = parseFloat(urlParams.get('weight'));
-    const headCircumference = urlParams.get('headCircumference') ? parseFloat(urlParams.get('headCircumference')) : null;
-    const dataSource = urlParams.get('dataSource');
+document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(location.search);
+    const gender = params.get('gender');
+    const birthDate = new Date(params.get('birthDate'));
+    const height = parseFloat(params.get('height'));
+    const weight = parseFloat(params.get('weight'));
+    const head = params.get('headCircumference') ? parseFloat(params.get('headCircumference')) : null;
+    const dataSource = params.get('dataSource');
+    const ageMonths = calculateAgeInMonths(birthDate, new Date());
 
-    // 데이터 선택 (수정됨)
-    const sourceData = dataSource === 'kdca' ? data.kdca : data.who;
-    const genderData = sourceData[gender];
+    const dataset = (dataSource === 'kdca' ? data.kdca : data.who)[gender];
 
-    // 아이 정보 표시
+    // UI 표시
     document.getElementById('childGender').textContent = gender === 'male' ? '남자' : '여자';
-    document.getElementById('childBirthDate').textContent = formatDate(birthDate);
+    document.getElementById('childBirthDate').textContent = formatDate(params.get('birthDate'));
     document.getElementById('dataStandard').textContent = dataSource === 'kdca' ? '질병관리청 기준' : 'WHO 기준';
+    document.getElementById('childAge').textContent = `${ageMonths}개월 (${calculateAgeInDays(birthDate, new Date())}일)`;
     document.getElementById('heightValue').textContent = `${height} cm`;
     document.getElementById('weightValue').textContent = `${weight} kg`;
+    document.getElementById('heightValueDetail').textContent = `${height} cm`;
+    document.getElementById('weightValueDetail').textContent = `${weight} kg`;
 
-    // 나이 계산 및 표시
-    const birthDateObj = new Date(birthDate);
-    const today = new Date();
-    const ageInMonths = calculateAgeInMonths(birthDateObj, today);
-    const ageInDays = calculateAgeInDays(birthDateObj, today);
-    document.getElementById('childAge').textContent = `${ageInMonths}개월 (${ageInDays}일)`;
+    const heightPct = calculatePercentile(height, dataset.height, ageMonths);
+    const weightPct = calculatePercentile(weight, dataset.weight, ageMonths);
 
-    // 백분위수 계산 (수정됨)
-    const heightPercentile = calculatePercentile(height, genderData.height, ageInMonths);
-    const weightPercentile = calculatePercentile(weight, genderData.weight, ageInMonths);
-    let headPercentile = null;
-    if (headCircumference) {
-        headPercentile = calculatePercentile(headCircumference, genderData.headCircumference, ageInMonths);
+    setResult('height', heightPct);
+    setResult('weight', weightPct);
+
+    if (head && dataset.headCircumference) {
+        const headPct = calculatePercentile(head, dataset.headCircumference, ageMonths);
+        document.getElementById('headValueDetail').textContent = `${head} cm`;
+        setResult('head', headPct);
     }
 
-    // BMI 계산 (수정됨)
-    const heightInMeters = height / 100;
-    const bmi = weight / (heightInMeters * heightInMeters);
-    const bmiFormatted = bmi.toFixed(1);
-    document.getElementById('bmiValue').textContent = `BMI: ${bmiFormatted}`;
-
-    let bmiPercentile = null;
-    if (ageInMonths >= 24) {
-        bmiPercentile = calculatePercentile(bmi, genderData.bmi, ageInMonths);
-    }
-
-    // 백분위수 표시
-    document.getElementById('heightPercentile').textContent = heightPercentile;
-    document.getElementById('weightPercentile').textContent = weightPercentile;
-    if (headCircumference) {
-        document.getElementById('headPercentile').textContent = headPercentile;
-    }
-
-    // 상태 표시
-    updateStatus('heightStatus', heightPercentile);
-    updateStatus('weightStatus', weightPercentile);
-    if (headCircumference) {
-        updateStatus('headStatus', headPercentile);
+    const bmi = +(weight / ((height / 100) ** 2)).toFixed(1);
+    document.getElementById('bmiValue').textContent = `BMI: ${bmi}`;
+    if (ageMonths >= 24 && dataset.bmi) {
+        const bmiPct = calculatePercentile(bmi, dataset.bmi, ageMonths);
+        setResult('bmi', bmiPct);
+    } else {
+        document.getElementById('bmiCard').style.display = 'none';
     }
 });
 
-// 💡 수정된 백분위 계산 함수
+function setResult(type, percentile) {
+    document.getElementById(`${type}Percentile`).textContent = percentile;
+    updateStatus(`${type}Status`, percentile);
+}
+
 function calculatePercentile(value, measurementData, ageInMonths) {
-    const monthsArray = measurementData.months;
-    let closestMonthIndex = 0;
-    let minDiff = Math.abs(monthsArray[0] - ageInMonths);
+    const idx = getClosestIndex(measurementData.months, ageInMonths);
+    const sorted = Object.entries(measurementData.percentiles)
+        .sort((a, b) => a[1][idx] - b[1][idx]);
 
-    for (let i = 1; i < monthsArray.length; i++) {
-        const diff = Math.abs(monthsArray[i] - ageInMonths);
-        if (diff < minDiff) {
-            minDiff = diff;
-            closestMonthIndex = i;
-        }
+    for (const [label, values] of sorted) {
+        if (value <= values[idx]) return label;
     }
+    return sorted.at(-1)[0];
+}
 
-    const percentiles = measurementData.percentiles;
-    let closestPercentile = null;
-
-    for (const percentile in percentiles) {
-        const percentileArray = percentiles[percentile];
-        const percentileValue = percentileArray[closestMonthIndex];
-
-        if (value <= percentileValue) {
-            closestPercentile = percentile;
-            break;
-        }
-    }
-
-    return closestPercentile ? closestPercentile : "알 수 없음";
+function getClosestIndex(arr, target) {
+    return arr.reduce((closestIdx, curr, i) =>
+        Math.abs(curr - target) < Math.abs(arr[closestIdx] - target) ? i : closestIdx, 0);
 }
