@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('childBirthDate').textContent = formatDate(birthDateStr);
     document.getElementById('heightValue').textContent = `${height} cm`;
     document.getElementById('weightValue').textContent = `${weight} kg`;
-    document.getElementById('dataStandard').textContent = dataSource === 'kdca' ? '질병관리청 기준' : 'WHO 기준';
+    document.getElementById('dataStandard').textContent = 'const dataset';    
     
     // 나이 계산
     const birthDate = new Date(birthDateStr);
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     try {
         // 데이터셋 선택
-        const dataset = data[dataSource][gender];
+        const dataset = data.kdca[gender];
         console.log("데이터셋 선택됨:", dataSource, gender);
         console.log("데이터셋 구조:", Object.keys(dataset));
         
