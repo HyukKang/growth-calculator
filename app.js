@@ -38,31 +38,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultBtn = document.getElementById('resultBtn');
     
     resultBtn.addEventListener('click', function() {
-        // Form validation
-        const form = document.getElementById('growthForm');
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-        
-        // Get form values
-        const gender = document.querySelector('input[name="gender"]:checked').value;
-        const birthDate = document.getElementById('birthDate').value;
-        const height = document.getElementById('height').value;
-        const weight = document.getElementById('weight').value;
-        const headCircumference = document.getElementById('headCircumference').value;
-        const dataSource = document.getElementById('dataSource').value;
-        
-        const queryParams = new URLSearchParams({
-            gender,
-            birthDate,
-            height,
-            weight,
-            headCircumference,
-            dataSource
-        });
-        
-        // Open results in new page
-        window.location.href = `results.html?${queryParams.toString()}`;
+    // Form validation
+    const form = document.getElementById('growthForm');
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+    
+    // Get form values
+    const gender = document.querySelector('input[name="gender"]:checked').value;
+    const birthDate = document.getElementById('birthDate').value;
+    const height = document.getElementById('height').value;
+    const weight = document.getElementById('weight').value;
+    const headCircumference = document.getElementById('headCircumference').value;
+    // dataSource는 고정값으로 설정하거나 제거
+    
+    const queryParams = new URLSearchParams({
+        gender,
+        birthDate,
+        height,
+        weight,
+        headCircumference,
+        dataSource: 'kdca'  // 항상 kdca로 고정
     });
+    
+    // Open results in new page
+    window.location.href = `results.html?${queryParams.toString()}`;
+});
 });
