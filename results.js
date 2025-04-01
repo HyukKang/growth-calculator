@@ -1,6 +1,8 @@
 // results.js - 차트 기능이 추가된 버전
 document.addEventListener('DOMContentLoaded', function() {
     console.log("결과 페이지가 로드되었습니다");
+    console.log("데이터 객체 확인:", typeof data, data?.kdca);
+
     
     // URL 파라미터 가져오기
     const params = new URLSearchParams(window.location.search);
